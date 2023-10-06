@@ -5,6 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\ReportModel;
 use App\Models\CarsModel;
+use App\Models\GrafikModel;
 use Config\Service;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -13,11 +14,13 @@ class Report extends BaseController
 {
     protected $report;
     protected $cars;
+    protected $grafik;
 
     function __construct()
     {
         $this->report = new ReportModel();
         $this->cars = new CarsModel();
+        $this->grafik = new GrafikModel();
     }
     public function index()
     {
@@ -95,8 +98,10 @@ class Report extends BaseController
             return redirect()->to(base_url('home'));
         }
     }
-    public function update($id)
+    public function update($id,$uid)
     {
+        $year=date('Y');
+        $jumlah=$this->grafik->jumlah;
         if (!$this->validate([
             'tanggalPengembalian' => [
                 'rules' => 'required',
@@ -119,9 +124,12 @@ class Report extends BaseController
             'tanggalPengembalian' => date("d-m-Y", strtotime($this->request->getVar('tanggalPengembalian'))),
             'BBM' => $this->request->getVar('BBM')
             ])){
-                $this->cars->update($id, [
+                $this->cars->update($uid, [
                     'available' => true,
                     'riwayatPemakaian' => date("d-m-Y", strtotime($this->request->getVar('tanggalPengembalian')))
+                ]);
+                $this->grafik->update(1, [
+                    'jumlah' => $jumlah+1,
                 ]);
                 session()->setFlashdata('message', 'Update Data Berhasil');
                 return redirect()->to('/cars');
@@ -143,7 +151,7 @@ class Report extends BaseController
             session()->setFlashdata('message', 'Update Data Berhasil');
             return redirect()->to('/report');
     }
-    public function reject($id)
+    public function reject($id,$uid)
     {
         if(session()->get('Role')=='HeadDiv'){
             $this->report->update($id, [
@@ -156,12 +164,27 @@ class Report extends BaseController
                 'managerApprov' => 0,
             ]);
         }
-
-            $dataReport= $this->report->find($id);
-            $this->report->where('id', $id);
-            $this->report->delete($id);
+        $this->cars->update($uid, [
+            'available' => true,
+            ]);
         session()->setFlashdata('message', 'Update Data Berhasil');
         return redirect()->to('/report');
+    }
+    function delete($id,$uid)
+    { 
+        if(session()->get('Role')=='Admin'){
+            $dataReport = $this->report->find($id);
+            $this->report->where('id', $id);
+            $this->report->delete($id);
+            $this->cars->update($uid, [
+                'available' => true,
+            ]);
+            
+            session()->setFlashdata('error', 'Delete Data Berhasil');
+            return redirect()->to(base_url('report'));
+        }else{
+            return redirect()->to(base_url('report'));
+        }
     }
     public function exportExcel(){
         $dataReport = $this->report->findAll();
@@ -203,5 +226,5 @@ class Report extends BaseController
         header('Cache-Control: max-age=0');
     
         $writer->save('php://output');
-    }   
+    }
 }

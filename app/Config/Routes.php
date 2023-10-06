@@ -61,11 +61,11 @@ $routes->group('report', function($routes){
 	$routes->post('export', 'Report::exportExcel');
 	$routes->get('create/(:segment)', 'Report::create/$1');
 	$routes->post('store/(:segment)', 'Report::store/$1');
-	$routes->get('edit/(:segment)', 'Report::edit/$1');
-	$routes->post('update/(:segment)', 'Report::update/$1');
+	$routes->get('edit/(:segment)/(:segment)', 'Report::edit/$1/$2');
+	$routes->post('update/(:segment)/(:segment)', 'Report::update/$1/$2');
     $routes->post('accept/(:segment)', 'Report::accept/$1');
-    $routes->post('reject/(:segment)/(:segment)', 'Report::reject/$1/$1');
-	$routes->get('delete/(:num)/(:num)', 'Report::delete/$1/$1');
+    $routes->post('reject/(:segment)/(:segment)', 'Report::reject/$1/$2');
+	$routes->get('delete/(:segment)/(:segment)', 'Report::delete/$1/$2');
 });
 /*
  * --------------------------------------------------------------------

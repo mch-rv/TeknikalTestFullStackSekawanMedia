@@ -16,7 +16,7 @@
                     </button>
                 </div>
             <?php endif; ?>
-            <form method="post" action="<?= base_url('report/update/'.$report->id) ?>" enctype="multipart/form-data">
+            <form method="post" action="<?= base_url('report/update/'.$report->id.'/'.$report->uid) ?>" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
 
                 <?= csrf_field(); ?>

@@ -31,7 +31,8 @@
                 <form action="<?= base_url('report/export') ?>" method="post">
                         <div class="input-group ">
                         <?= csrf_field(); ?>
-                            <button class="btn btn-primary" type="submit" name="submit">Export</button>
+                            <button class="btn btn-primary" type="submit" name="submit">
+                                <i class='bx bxs-file-export mr-1'></i>Export</button>
                         </div>
                     </form>
                 </div>
@@ -98,7 +99,10 @@
                             <?php if(session()->get('Role')=='Admin'){?>
                                 <td>
                                 <?php if(($row->managerApprov==1&&$row->headDivApprov==1)&&$row->tanggalPengembalian==NULL){ ?>
-                                    <a href="<?= base_url('report/edit/'.$row->id); ?>" class="btn btn-sm btn-outline-primary mb-1">Finish</a>
+                                    <a href="<?= base_url('report/edit/'.$row->id.'/'.$row->uid); ?>" class="btn btn-sm btn-outline-primary mb-1">Finish</a>
+                                <?php } ?>
+                                <?php if(($row->managerApprov==NULL&&$row->headDivApprov==NULL)&&$row->tanggalPengembalian==NULL){ ?>
+                                    <a href="<?= base_url('report/delete/'.$row->id.'/'.$row->uid) ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ?')" class="btn btn-sm btn-outline-danger">Delete</a>
                                 <?php } ?>
                                 </td>
                             <?php }?>

@@ -6,5 +6,5 @@
             <h1>Hai <?= session()->get('Name'); ?>! </h1>
             <p class="lead">Selamat Datang di dashboard <?= session()->get('Role'); ?>!</p>
         </div>
-    </main><!-- /.container -->
+    </main>
 <?= $this->endSection('content'); ?>
