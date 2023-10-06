@@ -35,8 +35,38 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/home', 'Home::index');
+$routes->get('/', 'Auth::login');
 
+$routes->group('Auth', function($routes){
+	$routes->get('login', 'Auth::login');
+	$routes->post('logprocess', 'Auth::loginprocess');
+	$routes->get('logout', 'Auth::logout');
+	
+});
+$routes->group('cars', function($routes){
+	$routes->get('/', 'Cars::index');
+	$routes->post('/', 'Cars::index');
+	$routes->get('preview/(:segment)', 'Cars::preview/$1');
+	$routes->get('create', 'Cars::create');
+	$routes->post('store', 'Cars::store');
+	$routes->get('edit/(:segment)', 'Cars::edit/$1');
+	$routes->post('update/(:segment)', 'Cars::update/$1');
+	$routes->get('delete/(:num)', 'Cars::delete/$1');
+    $routes->post('request/(:segment)', 'Cars::request/$1');
+});
+$routes->group('report', function($routes){
+	$routes->get('/', 'Report::index');
+	$routes->post('/', 'Report::index');
+	$routes->post('export', 'Report::exportExcel');
+	$routes->get('create/(:segment)', 'Report::create/$1');
+	$routes->post('store/(:segment)', 'Report::store/$1');
+	$routes->get('edit/(:segment)', 'Report::edit/$1');
+	$routes->post('update/(:segment)', 'Report::update/$1');
+    $routes->post('accept/(:segment)', 'Report::accept/$1');
+    $routes->post('reject/(:segment)/(:segment)', 'Report::reject/$1/$1');
+	$routes->get('delete/(:num)/(:num)', 'Report::delete/$1/$1');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

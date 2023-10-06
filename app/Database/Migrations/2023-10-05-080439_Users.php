@@ -31,10 +31,11 @@ class Users extends Migration
 				'type'           => 'VARCHAR',
 				'constraint'     => '10',
 			],
-			'created_at' => [
+			'created_at DATETIME DEFAULT CURRENT_TIMESTAMP',
+            'updated_at' => [
 				'type'           => 'DATETIME',
-				'null'       	 => true,
-			],
+				'null'           => true,
+			]
 		]);
 		$this->forge->addPrimaryKey('id', true);
 		$this->forge->createTable('Users');

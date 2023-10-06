@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Cars extends Migration
+class Report extends Migration
 {
     public function up()
     {
@@ -15,6 +15,11 @@ class Cars extends Migration
 				'unsigned'       => true,
 				'auto_increment' => true
 			],
+			'uid'          => [
+				'type'           => 'INT',
+				'constraint'     => 5,
+				'unsigned'       => true,
+			],
 			'jenisMobil'          => [
 				'type'           => 'VARCHAR',
 				'constraint'     => '100',
@@ -23,17 +28,29 @@ class Cars extends Migration
 				'type'           => 'VARCHAR',
 				'constraint'     => '100',
 			],
-            'jadwalService'       => [
+			'Driver'       => [
 				'type'           => 'VARCHAR',
 				'constraint'     => '100',
 			],
-            'riwayatPemakaian'       => [
+            'tanggalPengajuan'       => [
 				'type'           => 'VARCHAR',
 				'constraint'     => '100',
 			],
-            'available'       => [
+            'tanggalPengembalian'       => [
+				'type'           => 'VARCHAR',
+				'constraint'     => '100',
+			],
+            'headDivApprov'       => [
 				'type'           => 'BOOLEAN',
 				'null'       	 => true,
+			],
+            'managerApprov'       => [
+				'type'           => 'BOOLEAN',
+				'null'       	 => true,
+			],
+            'BBM'       => [
+				'type'           => 'VARCHAR',
+				'constraint'     => '100',
 			],
 			'created_at DATETIME DEFAULT CURRENT_TIMESTAMP',
             'updated_at' => [
@@ -42,11 +59,11 @@ class Cars extends Migration
 			]
 		]);
 		$this->forge->addPrimaryKey('id', true);
-		$this->forge->createTable('Cars');
+		$this->forge->createTable('Report');
     }
 
     public function down()
     {
-        $this->forge->dropTable('Cars');
+        $this->forge->dropTable('Report');
     }
 }
