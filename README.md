@@ -2,22 +2,22 @@
 
 ## Daftar User
 
-Admin
-username: Admin
+Admin\
+username: Admin\
 password: Admin
 
-HeadDiv
-username: HeadDiv
+HeadDiv\
+username: HeadDiv\
 password: HeadDiv
 
-Manager
-username: Manager
+Manager\
+username: Manager\
 password: Manager
 
-XAMPP Version 8.1.10
-PHP Version 8.1.10
-Database MySQL/phpMyAdmin 8.1.10
-Framework Codeignite 4.2.11
+XAMPP Version 8.1.10\
+PHP Version 8.1.10\
+Database MySQL/phpMyAdmin 8.1.10\
+Framework Codeignite 4.2.11\
 
 # Cara install
 
